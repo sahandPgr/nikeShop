@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shop/data/product.dart';
+import 'package:nike_shop/ui/product/comment/comment_list.dart';
 import 'package:nike_shop/ui/widgets/image_service.dart';
 import 'package:nike_shop/utils/utils.dart';
 
@@ -81,7 +82,7 @@ class ProductDetail extends StatelessWidget {
                   ),
                 ]),
               ),
-              // CommentListView(productId: product.id),
+              CommentListView(productId: product.id),
               const SliverToBoxAdapter(child: SizedBox(height: 40,),)
             ],
           ),
