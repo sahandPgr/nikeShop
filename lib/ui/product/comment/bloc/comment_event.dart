@@ -1,8 +1,10 @@
 part of 'comment_bloc.dart';
 
-sealed class CommentEvent extends Equatable {
+abstract class CommentEvent extends Equatable {
   const CommentEvent();
 
   @override
   List<Object> get props => [];
 }
+
+class CommentStarted extends CommentEvent{}
