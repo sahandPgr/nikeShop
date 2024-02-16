@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nike_shop/theme.dart';
 import 'package:nike_shop/ui/home/home.dart';
 
 void main() {
@@ -14,7 +15,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Nike Shop',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: LightThemeColors.secondaryColor),
+        colorScheme: const ColorScheme.light(
+            primary: LightThemeColors.primaryColor,
+            secondary: LightThemeColors.secondaryColor,
+            onSecondary: Colors.white),
         useMaterial3: true,
       ),
       home: const HomePage(),

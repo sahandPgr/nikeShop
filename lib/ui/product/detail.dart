@@ -14,6 +14,12 @@ class ProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+          height: 50,
+          width: MediaQuery.of(context).size.width - 100,
+          child: FloatingActionButton.extended(
+              onPressed: () {}, label: const Text('افزودن به سبد خرید'))),
       body: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
@@ -76,14 +82,19 @@ class ProductDetail extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('نظرات کاربران'),
-                        TextButton(onPressed: () {}, child: const Text('ثبت نظر'))
+                        TextButton(
+                            onPressed: () {}, child: const Text('ثبت نظر'))
                       ],
                     ),
                   ),
                 ]),
               ),
               CommentListView(productId: product.id),
-              const SliverToBoxAdapter(child: SizedBox(height: 40,),)
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 90,
+                ),
+              )
             ],
           ),
         ),
