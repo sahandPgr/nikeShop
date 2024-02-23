@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/theme.dart';
-import 'package:nike_shop/ui/home/home.dart';
+
+import 'package:nike_shop/ui/root_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
             onSecondary: Colors.white),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const Directionality(textDirection: TextDirection.rtl,child: RootPage()),
     );
   }
 }
