@@ -77,15 +77,17 @@ class CommentItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if(data.title != '')
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,child: Text(data.title!,)),
-                  const SizedBox(height: 4,),
-                  Text('توسظ ${data.userName}'),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if(data.title != '')
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,child: Text(data.title!,)),
+                    const SizedBox(height: 4,),
+                    Text('توسظ ${data.userName}'),
+                  ],
+                ),
               ),
               Text(data.date)
             ],
