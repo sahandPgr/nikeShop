@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/theme.dart';
+import 'package:nike_shop/ui/auth/auth_screen.dart';
 
 import 'package:nike_shop/ui/root_page.dart';
 
@@ -16,15 +17,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Nike Shop',
       theme: ThemeData(
+        textTheme: const TextTheme(labelMedium: TextStyle(fontSize: 15)),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: LightThemeColors.secondaryColor),
         colorScheme: const ColorScheme.light(
-            primary: LightThemeColors.primaryColor,
-            secondary: LightThemeColors.secondaryColor,
-            onSecondary: Colors.white),
+          primary: LightThemeColors.primaryColor,
+          secondary: LightThemeColors.secondaryColor,
+          onSecondary: Colors.white,
+        ),
         useMaterial3: true,
       ),
-      home: const Directionality(textDirection: TextDirection.rtl,child: RootPage()),
+      home: const Directionality(
+          textDirection: TextDirection.rtl, child: AuthScreen()),
     );
   }
 }
