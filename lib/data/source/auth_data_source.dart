@@ -31,8 +31,19 @@ class AuthRemoteSource with HttpResponseValidator implements IAuthDataSource {
   }
 
   @override
-  Future<AuthEntity> refreshToken(String refreshToken) {
-    throw UnimplementedError();
+  Future<AuthEntity> refreshToken(String refreshToken) async {
+    final response = await httpClient.post('/auth/token', data: {
+      'grant_type': 'refresh_token',
+      'refresh_token': refreshToken,
+      'client_id': "2",
+      'client_secret': Constant.client_secret
+    });
+
+    validatorResponse(response);
+
+    return AuthEntity(
+        accessToken: response.data['access_token'],
+        refreshToken: response.data['refresh_token']);
   }
 
   @override

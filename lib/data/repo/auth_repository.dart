@@ -9,6 +9,7 @@ final authRepository =
 abstract class IAuthRepository {
   Future<void> login(String username, String password);
   Future<void> register(String username, String password);
+  Future<void> refreshToken(String refreshToken);
 }
 
 class AuthRepository implements IAuthRepository {
@@ -30,6 +31,16 @@ class AuthRepository implements IAuthRepository {
   Future<void> register(String username, String password) async {
     try {
       final AuthEntity authInfo = await dataSource.register(username, password);
+      debugPrint('Acess token is ${authInfo.accessToken}');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  @override
+  Future<void> refreshToken(String refreshToken) async {
+    try {
+      final AuthEntity authInfo = await dataSource.refreshToken(refreshToken);
       debugPrint('Acess token is ${authInfo.accessToken}');
     } catch (e) {
       debugPrint(e.toString());
