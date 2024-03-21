@@ -36,7 +36,10 @@ class AuthRemoteSource with HttpResponseValidator implements IAuthDataSource {
   }
 
   @override
-  Future<AuthEntity> register(String username, String password) {
-    throw UnimplementedError();
+  Future<AuthEntity> register(String username, String password) async {
+    final response = await httpClient.post('/user/register',
+        data: {"email": username, "password": password});
+    validatorResponse(response);
+    return login(username, password);
   }
 }

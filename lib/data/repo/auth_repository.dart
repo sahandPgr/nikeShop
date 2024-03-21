@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:nike_shop/data/auth.dart';
 import 'package:nike_shop/data/common/http_client.dart';
 import 'package:nike_shop/data/source/auth_data_source.dart';
 
@@ -6,6 +8,7 @@ final authRepository =
 
 abstract class IAuthRepository {
   Future<void> login(String username, String password);
+  Future<void> register(String username, String password);
 }
 
 class AuthRepository implements IAuthRepository {
@@ -14,7 +17,22 @@ class AuthRepository implements IAuthRepository {
   AuthRepository({required this.dataSource});
 
   @override
-  Future<void> login(String username, String password) {
-    return dataSource.login(username, password);
+  Future<void> login(String username, String password) async {
+    try {
+      final AuthEntity authInfo = await dataSource.login(username, password);
+      debugPrint('Acess token is ${authInfo.accessToken}');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  @override
+  Future<void> register(String username, String password) async {
+    try {
+      final AuthEntity authInfo = await dataSource.register(username, password);
+      debugPrint('Acess token is ${authInfo.accessToken}');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nike_shop/data/repo/auth_repository.dart';
 import 'package:nike_shop/theme.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -81,7 +82,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: 12,
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      authRepository.register('tes2121t@gmail.com', '123456');
+                    },
                     child: Text(isLogin ? 'ورود' : 'ثبت نام',
                         style: themeData.textTheme.labelLarge!
                             .apply(fontSizeFactor: 1.2))),
