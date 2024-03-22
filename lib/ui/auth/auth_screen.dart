@@ -11,6 +11,10 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool isLogin = true;
+  final TextEditingController usernameController =
+      TextEditingController(text: 'tes2121t@gmail.com');
+  final TextEditingController passwordController =
+      TextEditingController(text: '123456');
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
@@ -71,19 +75,24 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: 12,
                 ),
                 TextField(
+                  controller: usernameController,
                   style: TextStyle(color: themeData.colorScheme.onSecondary),
                   decoration: const InputDecoration(label: Text('ایمیل')),
                 ),
                 const SizedBox(
                   height: 12,
                 ),
-                _PasswordField(themeData: themeData),
+                _PasswordField(
+                  themeData: themeData,
+                  controller: passwordController,
+                ),
                 const SizedBox(
                   height: 12,
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      authRepository.register('tes2121t@gmail.com', '123456');
+                      authRepository.login(
+                          usernameController.text, passwordController.text);
                     },
                     child: Text(isLogin ? 'ورود' : 'ثبت نام',
                         style: themeData.textTheme.labelLarge!
@@ -128,9 +137,11 @@ class _AuthScreenState extends State<AuthScreen> {
 class _PasswordField extends StatefulWidget {
   const _PasswordField({
     required this.themeData,
+    required this.controller,
   });
 
   final ThemeData themeData;
+  final TextEditingController controller;
 
   @override
   State<_PasswordField> createState() => _PasswordFieldState();
@@ -141,6 +152,7 @@ class _PasswordFieldState extends State<_PasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.controller,
       style: TextStyle(color: widget.themeData.colorScheme.onSecondary),
       keyboardType: TextInputType.visiblePassword,
       obscureText: obscureText,
