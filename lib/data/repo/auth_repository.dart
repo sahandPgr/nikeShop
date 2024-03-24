@@ -11,6 +11,7 @@ abstract class IAuthRepository {
   Future<void> login(String username, String password);
   Future<void> register(String username, String password);
   Future<void> refreshToken(String refreshToken);
+  Future<void> signOut();
 }
 
 class AuthRepository implements IAuthRepository {
@@ -22,42 +23,40 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<void> login(String username, String password) async {
-    try {
-      final AuthEntity authInfo = await dataSource.login(username, password);
-      _saveAuthToken(authInfo);
-      debugPrint('Acess token is ${authInfo.accessToken}');
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    final AuthEntity authInfo = await dataSource.login(username, password);
+    _saveAuthToken(authInfo);
+    // debugPrint('Acess token is ${authInfo.accessToken}');
   }
 
   @override
   Future<void> register(String username, String password) async {
-    try {
-      final AuthEntity authInfo = await dataSource.register(username, password);
-      _saveAuthToken(authInfo);
-      debugPrint('Acess token is ${authInfo.accessToken}');
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    final AuthEntity authInfo = await dataSource.register(username, password);
+    _saveAuthToken(authInfo);
+    // debugPrint('Acess token is ${authInfo.accessToken}');
   }
 
   @override
   Future<void> refreshToken(String refreshToken) async {
     try {
       final AuthEntity authInfo = await dataSource.refreshToken(refreshToken);
+      // debugPrint(authInfo.refreshToken);
       _saveAuthToken(authInfo);
-      debugPrint('Acess token is ${authInfo.accessToken}');
     } catch (e) {
-      debugPrint(e.toString());
+      signOut();
     }
+    // debugPrint('Acess token is ${authInfo.accessToken}');
   }
 
   Future<void> _saveAuthToken(AuthEntity authInfo) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    sharedPreferences.setString('access_token', authInfo.accessToken);
-    sharedPreferences.setString('refresh_token', authInfo.refreshToken);
+    if (authInfo.accessToken.isNotEmpty && authInfo.refreshToken.isNotEmpty) {
+      sharedPreferences.setString('access_token', authInfo.accessToken);
+      sharedPreferences.setString('refresh_token', authInfo.refreshToken);
+      authValueNotifier.value = AuthEntity(
+          accessToken: authInfo.accessToken,
+          refreshToken: authInfo.refreshToken);
+    }
   }
 
   Future<void> loadAuthToken() async {
@@ -73,5 +72,13 @@ class AuthRepository implements IAuthRepository {
       authValueNotifier.value =
           AuthEntity(accessToken: accessToken, refreshToken: refreshToken);
     }
+  }
+
+  @override
+  Future<void> signOut() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.clear();
+    authValueNotifier.value = null;
   }
 }
